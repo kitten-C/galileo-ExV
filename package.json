@@ -4,15 +4,15 @@
   "version": "0.0.0",
   "main": "./src-electron/main.js",
   "scripts": {
-    "dev": "vite",
+    "dev": "vite -- --123",
     "build": "vite build",
     "preview": "vite preview",
-    "electron:build": "vite build && electron-builder"
+    "ebuild": "vite build && electron-builder"
   },
   "build": {
     "productName": "ElectronDeskTopTool",
-    "appId": "dyy.dongyuanwai",
-    "copyright": "dyy.dongyuanwai © 2024",
+    "appId": "12",
+    "copyright": "12",
     "compression": "maximum",
     "asar": true,
     "directories": {
@@ -46,6 +46,7 @@
     }
   },
   "dependencies": {
+    "koffi": "^2.9.2",
     "sass": "^1.80.6",
     "vue": "^3.5.12"
   },

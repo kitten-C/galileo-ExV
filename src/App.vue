@@ -1,12 +1,26 @@
 <template>
   <div class="main">
-    <video src="file:///d:/assets/galile-Exv/video_111013.mp4" autoplay loop controls></video>
+    <!-- <video src="/video_111013.mp4" autoplay loop controls></video> -->
+    <video :src="args" autoplay loop controls></video>
+     {{ args }}
   </div>
 </template>
 <script setup>
+import { onMounted, ref } from 'vue'
 import config from '../config'
-console.log('assetsPath', config.path + '1');
+let args = ref()
+let videoSrc = ref()
 
+onMounted(() => {
+  
+
+})
+window.electron.onSetFolderPath((folderPath) => {
+  args.value = `file://${folderPath}/video.mp4`
+  
+  console.log('files', window.electron)
+  
+})
 
 </script>
 <style lang="scss">
