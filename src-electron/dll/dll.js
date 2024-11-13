@@ -1,7 +1,7 @@
-import koffi from 'koffi'
-import path from 'path'
+const koffi = require('koffi')
+const path = require('path')
 
-export default class Dll {
+class Dll {
   constructor(parameters) {
     this.lib = koffi.load(path.resolve(path.dirname(__dirname), parameters.path))
     this.init(parameters.config)
@@ -16,3 +16,5 @@ export default class Dll {
     })
   }
 }
+
+module.exports = Dll

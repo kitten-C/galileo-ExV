@@ -1,1 +1,41 @@
-"use strict";const{app:o,BrowserWindow:r}=require("electron"),s=require("node:path");process.env.ELECTRON_DISABLE_SECURITY_WARNINGS="true";const t=()=>{const e=new r({width:1200,height:600,fullscreen:!0,autoHideMenuBar:!0,webPreferences:{preload:s.join(__dirname,"preload.js"),webSecurity:!1,contextIsolation:!0,enableRemoteModule:!1}});process.env.VITE_DEV_SERVER_URL?(e.loadURL(process.env.VITE_DEV_SERVER_URL),e.webContents.openDevTools()):e.loadFile(s.join(__dirname,"../dist/index.html")),e.webContents.on("did-finish-load",()=>{let n=process.argv;process.env.NODE_ENV==="development"&&(n="D:\\assets\\galile-Exv"),console.log("process.env.NODE_ENV",process.env.NODE_ENV,n),e.webContents.send("set-folder-path",n)})};o.whenReady().then(()=>{t(),o.on("activate",()=>{r.getAllWindows().length===0&&t()})});o.on("window-all-closed",()=>{process.platform!=="darwin"&&o.quit()});
+"use strict";
+const { app, BrowserWindow } = require("electron");
+const path = require("node:path");
+process.env["ELECTRON_DISABLE_SECURITY_WARNINGS"] = "true";
+const createWindow = () => {
+  const win = new BrowserWindow({
+    width: 1200,
+    height: 600,
+    fullscreen: true,
+    // 设置窗口全屏
+    autoHideMenuBar: true,
+    webPreferences: {
+      preload: path.join(__dirname, "preload.js")
+      // webSecurity: false,
+      // contextIsolation: true,
+      // enableRemoteModule: false,
+    }
+  });
+  if (process.env.VITE_DEV_SERVER_URL) {
+    win.loadURL(process.env.VITE_DEV_SERVER_URL);
+    win.webContents.openDevTools();
+  } else {
+    win.loadFile(path.join(__dirname, "../dist/index.html"));
+  }
+  win.webContents.on("did-finish-load", () => {
+    process.argv;
+    const args = {};
+    if (process.env.NODE_ENV === "development") ;
+    console.log("process.env.NODE_ENV", process.env.NODE_ENV, args);
+    win.webContents.send("set-folder-path", args);
+  });
+};
+app.whenReady().then(() => {
+  createWindow();
+  app.on("activate", () => {
+    if (BrowserWindow.getAllWindows().length === 0) createWindow();
+  });
+});
+app.on("window-all-closed", () => {
+  if (process.platform !== "darwin") app.quit();
+});

@@ -12,7 +12,7 @@ let args = ref()
 let videoSrc = ref()
 
 onMounted(() => {
-  
+                                                                        
 
 })
 window.electron.onSetFolderPath((folderPath) => {

@@ -1,5 +1,5 @@
-import Dll from '../dll'
-import path from 'path'
+const Dll = require('../dll')
+const path = require('path')
 
 const dllPath = path.resolve(path.dirname(__dirname), 'src/dll/treadmill/ComApi.dll')
 const config = {
@@ -14,4 +14,4 @@ const config = {
 
 const treadmillDll = new Dll({ path: dllPath, config })
 
-export default treadmillDll
+module.exports = treadmillDll
