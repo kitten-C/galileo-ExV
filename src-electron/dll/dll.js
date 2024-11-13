@@ -1,22 +1,18 @@
-import { forcePlatformDll } from './forcePlatform'
-import { fpsDll } from './fps'
-import { sEMGDll } from './sEMG'
-import { EEGDll } from './EEG'
-import { moveMouse } from './moveMouse'
-import { Physiolab } from './Physiolab'
-import { gateDll } from './gate'
-import { sixAxis } from './sixAxis'
+import koffi from 'koffi'
+import path from 'path'
 
+export default class Dll {
+  constructor(parameters) {
+    this.lib = koffi.load(path.resolve(path.dirname(__dirname), parameters.path))
+    this.init(parameters.config)
+  }
 
-const dll = {
-  forcePlatformDll,
-  fpsDll,
-  sEMGDll,
-  EEGDll,
-  moveMouse,
-  Physiolab,
-  gateDll,
-  sixAxis
+  init(config) {
+    Object.keys(config).forEach(k => {
+      const v = config[k]
+      const ret = v[0]
+      const params = v[1]
+      this.lib.func(k, ret, params)
+    })
+  }
 }
-
-export default dll
